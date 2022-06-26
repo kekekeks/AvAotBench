@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <OutputType>WinExe</OutputType>
+        <OutputType>Exe</OutputType>
         <TargetFramework>net6.0</TargetFramework>
         <Nullable>enable</Nullable>
     </PropertyGroup>
@@ -9,7 +9,6 @@
         <TrimmerDefaultAction>link</TrimmerDefaultAction>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Mode)' == 'R2R'">
-        <PublishTrimmed>true</PublishTrimmed>
         <PublishReadyToRun>true</PublishReadyToRun>
         <TrimmerDefaultAction>link</TrimmerDefaultAction>
     </PropertyGroup>
@@ -30,7 +29,7 @@
         <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
         <PackageReference Include="Avalonia.Controls.DataGrid" Version="0.10.15" />
     </ItemGroup>
-    <ItemGroup Condition="'$(Mode)' == 'NAOT'">
+    <ItemGroup Condition="'$(Mode)' == 'NativeAOT'">
         <PackageReference Include="Microsoft.DotNet.ILCompiler" Version="7.0.0-preview.5.22301.12" />
     </ItemGroup>
 </Project>
