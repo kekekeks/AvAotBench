@@ -48,7 +48,7 @@ class ProcessMeasurement
 
 function Clear-AvaloniaAotBenchBin()
 {
-    Pause 100
+    Start-Sleep -Seconds 5
     if (Test-Path "AvaloniaAotBench\bin") {
  
         Remove-Item "AvaloniaAotBench\bin" -Recurse -Force
