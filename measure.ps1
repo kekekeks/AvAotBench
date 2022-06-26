@@ -11,6 +11,11 @@ class ProcessMeasurement
         for ($i = 0; $i -lt $this.Iterations; $i++)
         {
             & "$SampleName\bin\Release\net6.0\$rid\publish\$SampleName.exe" crash
+            if ($LASTEXITCODE -ne 42)
+            {
+                return -1;
+            }
+
             $current = ($(date) -$start).TotalMilliseconds
             if ($this.Verbose)
             {
