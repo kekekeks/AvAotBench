@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
@@ -15,9 +16,6 @@ namespace AvaloniaAotBench
         public MainWindow()
         {
             InitializeComponent();
-#if DEBUG
-            this.AttachDevTools();
-#endif
         }
 
         private void InitializeComponent()
@@ -41,7 +39,7 @@ namespace AvaloniaAotBench
 
             public void Render(IDrawingContextImpl context)
             {
-                Console.WriteLine("Time from Main to first render: " + (Program.Stopwatch.Elapsed - Program.MainTime));
+                Process.GetCurrentProcess().Kill();
             }
 
             public Rect Bounds { get; }
