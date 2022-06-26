@@ -5,12 +5,12 @@ class ProcessMeasurement
 
     [double]Measure([string]$SampleName, [string]$rid)
     {
-        $start=date;EnableAvaloniaXamlCompilation
+        $start=date;
         $failed = 0
         $last = 0.0
         for ($i = 0; $i -lt $this.Iterations; $i++)
         {
-            "$SampleName\bin\Release\net6.0\$rid\publish\$SampleName.exe" crash
+            & "$SampleName\bin\Release\net6.0\$rid\publish\$SampleName.exe" crash
             $current = ($(date) -$start).TotalMilliseconds
             if ($this.Verbose)
             {
