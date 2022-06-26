@@ -13,6 +13,14 @@
         <PublishReadyToRun>true</PublishReadyToRun>
         <TrimmerDefaultAction>link</TrimmerDefaultAction>
     </PropertyGroup>
+    <PropertyGroup Condition="'$(Mode)' == 'R2RComposite'">
+        <PublishTrimmed>true</PublishTrimmed>
+        <PublishReadyToRun>true</PublishReadyToRun>
+        <TrimmerDefaultAction>link</TrimmerDefaultAction>
+        <PublishReadyToRunComposite>true</PublishReadyToRunComposite>
+        <PgoData>StandardOptimizationData.mibc</PgoData>
+        <PublishReadyToRunCrossgen2ExtraArgs>--inputbubble%3b--instruction-set:avx2%3b--compilebubblegenerics%3b--embed-pgo-data%3b--mibc%3a$(PgoData)</PublishReadyToRunCrossgen2ExtraArgs>
+    </PropertyGroup>
     <ItemGroup>
         <None Remove=".gitignore" />
     </ItemGroup>

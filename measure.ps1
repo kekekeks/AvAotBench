@@ -10,12 +10,13 @@ class ProcessMeasurement
         $last = 0.0
         for ($i = 0; $i -lt $this.Iterations; $i++)
         {
-            "$SampleName\bin\Release\net6.0\$rid\publish\$SampleName.exe" 
+            "$SampleName\bin\Release\net6.0\$rid\publish\$SampleName.exe"
             $current = ($(date) -$start).TotalMilliseconds
             if ($this.Verbose)
             {
                 Write-Host ($current - $last)
             }
+
             $last = $current
         }
 
@@ -55,6 +56,12 @@ dotnet publish AvaloniaAotBench/AvaloniaAotBench.csproj -c Release -r win-x64 /p
 Write-Host "Measuring R2R app"
 $R2RTime=$measure.Measure("AvaloniaAotBench", "win-x64")
 Write-Host "R2R " $R2RTime " ms"
+
+Write-Host "Building R2R Composite app"
+dotnet publish AvaloniaAotBench/AvaloniaAotBench.csproj -c Release -r win-x64 /p:Mode=R2R | Out-Null
+Write-Host "Measuring R2R Composite app"
+$R2RCompositeTime=$measure.Measure("AvaloniaAotBench", "win-x64")
+Write-Host "R2R Composite " $R2RCompositeTime " ms"
 
 Write-Host "Building NativeAOT app"
 dotnet publish AvaloniaAotBench/AvaloniaAotBench.csproj -c Release -r win-x64 /p:Mode=NativeAOT | Out-Null
