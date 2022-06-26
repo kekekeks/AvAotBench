@@ -14,24 +14,28 @@ function measure
 }
 
 echo "Building Trimmed app"
+rm AvaloniaAotBench/{bin,obj} -rf
 dotnet publish AvaloniaAotBench/AvaloniaAotBench.csproj -c Release -r linux-x64 /p:Mode=Trimmed > /dev/null
 echo "Measuring Trimmed app"
 measure "AvaloniaAotBench" "linux-x64"
 echo "Trimmed " $TrimmedTime " ms"
 
 echo "Building R2R app"
+rm AvaloniaAotBench/{bin,obj} -rf
 dotnet publish AvaloniaAotBench/AvaloniaAotBench.csproj -c Release -r linux-x64 /p:Mode=R2R > /dev/null
 echo "Measuring R2R app"
 measure "AvaloniaAotBench" "linux-x64"
 echo "R2R " $R2RTime " ms"
 
 echo "Building R2R Composite app"
+rm AvaloniaAotBench/{bin,obj} -rf
 dotnet publish AvaloniaAotBench/AvaloniaAotBench.csproj -c Release -r linux-x64 /p:Mode=R2R > /dev/null
 echo "Measuring R2R Composite app"
 measure "AvaloniaAotBench" "linux-x64"
 echo "R2R Composite " $R2RCompositeTime " ms"
 
 echo "Building NativeAOT app"
+rm AvaloniaAotBench/{bin,obj} -rf
 dotnet publish AvaloniaAotBench/AvaloniaAotBench.csproj -c Release -r linux-x64 /p:Mode=NativeAOT > /dev/null
 echo "Measuring NativeAOT app"
 measure "AvaloniaAotBench" "linux-x64"

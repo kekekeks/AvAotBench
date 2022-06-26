@@ -5,7 +5,7 @@ class ProcessMeasurement
 
     [double]Measure([string]$SampleName, [string]$rid)
     {
-        $start=date;
+        $start=date;EnableAvaloniaXamlCompilation
         $failed = 0
         $last = 0.0
         for ($i = 0; $i -lt $this.Iterations; $i++)
@@ -21,7 +21,7 @@ class ProcessMeasurement
         }
 
         $duration = ($(date) -$start).TotalMilliseconds
-        if ($failed > 0)
+        if ($failed -gt 0)
         {
             Write-Host "Failed iterations " $failed
         }
@@ -45,25 +45,36 @@ $measure = New-Object -TypeName ProcessMeasurement
 $measure.Iterations = 1 # We want to measure cold start, otherwise subsequent runs would run faster.
 $measure.Verbose = $false
 
+Write-Host "Building Regular app"
+rm AvaloniaAotBench\bin,.\AvaloniaAotBench\obj -Force -Recurse
+dotnet publish AvaloniaAotBench/AvaloniaAotBench.csproj -c Release -r win-x64 /p:Mode=None | Out-Null
+Write-Host "Measuring Regular app"
+$RegularTime=$measure.Measure("AvaloniaAotBench", "win-x64")
+Write-Host "Regular " $RegularTime " ms"
+
 Write-Host "Building Trimmed app"
+rm AvaloniaAotBench\bin,.\AvaloniaAotBench\obj -Force -Recurse
 dotnet publish AvaloniaAotBench/AvaloniaAotBench.csproj -c Release -r win-x64 /p:Mode=Trimmed | Out-Null
 Write-Host "Measuring Trimmed app"
 $TrimmedTime=$measure.Measure("AvaloniaAotBench", "win-x64")
 Write-Host "Trimmed " $TrimmedTime " ms"
 
 Write-Host "Building R2R app"
+rm AvaloniaAotBench\bin,.\AvaloniaAotBench\obj -Force -Recurse
 dotnet publish AvaloniaAotBench/AvaloniaAotBench.csproj -c Release -r win-x64 /p:Mode=R2R | Out-Null
 Write-Host "Measuring R2R app"
 $R2RTime=$measure.Measure("AvaloniaAotBench", "win-x64")
 Write-Host "R2R " $R2RTime " ms"
 
 Write-Host "Building R2R Composite app"
+rm AvaloniaAotBench\bin,.\AvaloniaAotBench\obj -Force -Recurse
 dotnet publish AvaloniaAotBench/AvaloniaAotBench.csproj -c Release -r win-x64 /p:Mode=R2R | Out-Null
 Write-Host "Measuring R2R Composite app"
 $R2RCompositeTime=$measure.Measure("AvaloniaAotBench", "win-x64")
 Write-Host "R2R Composite " $R2RCompositeTime " ms"
 
 Write-Host "Building NativeAOT app"
+rm AvaloniaAotBench\bin,.\AvaloniaAotBench\obj -Force -Recurse
 dotnet publish AvaloniaAotBench/AvaloniaAotBench.csproj -c Release -r win-x64 /p:Mode=NativeAOT | Out-Null
 Write-Host "Measuring NativeAOT app"
 $NativeAOTTime=$measure.Measure("AvaloniaAotBench", "win-x64")
