@@ -10,7 +10,7 @@ class ProcessMeasurement
         $last = 0.0
         for ($i = 0; $i -lt $this.Iterations; $i++)
         {
-            "$SampleName\bin\Release\net6.0\$rid\publish\$SampleName.exe"
+            "$SampleName\bin\Release\net6.0\$rid\publish\$SampleName.exe" crash
             $current = ($(date) -$start).TotalMilliseconds
             if ($this.Verbose)
             {
