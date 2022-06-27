@@ -39,7 +39,11 @@ namespace AvaloniaAotBench
 
             public void Render(IDrawingContextImpl context)
             {
-                Process.GetCurrentProcess().Kill();
+                var args = Environment.GetCommandLineArgs();
+                if (args.Length > 1 && args[1] == "crash")
+                {
+                    Environment.Exit(42);
+                }
             }
 
             public Rect Bounds { get; }
